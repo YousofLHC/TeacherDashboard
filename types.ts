@@ -60,6 +60,7 @@ export interface GradeEntry {
   maxAtTime: number;
   coefAtTime: number;
   percentAtTime: number;
+  ruleNameAtTime?: string;
   note?: string;
 }
 

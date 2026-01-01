@@ -63,13 +63,13 @@ const ManagementView: React.FC<Props> = ({
   };
 
   const CRUDSection = ({ title, items, dataKey, onAdd, onDelete, placeholder, colorClass, active, onSelect }: any) => {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(dataKey === 'academicYears' ? '۱۴۰۴-۱۴۰۵' : '');
 
     const handleAdd = () => {
       if (inputValue.trim()) {
         onAdd(inputValue.trim());
-        setInputValue('');
-        notify('اضافه شد.');
+        setInputValue(dataKey === 'academicYears' ? '۱۴۰۴-۱۴۰۵' : '');
+        notify('با موفقیت اضافه شد.');
       }
     };
 
@@ -78,7 +78,7 @@ const ManagementView: React.FC<Props> = ({
         <div className="p-6 border-b flex items-center justify-between bg-slate-50/50">
           <div>
             <h3 className="font-black text-slate-800 text-lg">{title}</h3>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{items.length} مورد</p>
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{items.length} مورد ثبت شده</p>
           </div>
           <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-white shadow-lg ${colorClass}`}>
              <ICONS.Layout className="w-5 h-5" />
@@ -96,21 +96,22 @@ const ManagementView: React.FC<Props> = ({
                 key={item.id} 
                 onClick={() => onSelect && onSelect(item.id)}
                 className={`group flex items-center justify-between p-4 rounded-2xl transition-all duration-300 border-2 cursor-pointer ${
-                  isSelected ? 'bg-indigo-50 border-indigo-500' : 'bg-white border-slate-50 hover:border-indigo-100'
+                  isSelected ? 'bg-indigo-50 border-indigo-500 shadow-md' : 'bg-white border-slate-50 hover:border-indigo-100'
                 }`}
               >
                 {editingId === item.id ? (
                   <input 
                     autoFocus
-                    className="flex-grow bg-transparent text-sm font-black outline-none text-slate-900"
+                    className="flex-grow bg-white p-2 rounded-lg text-sm font-black outline-none text-slate-900 border border-indigo-200"
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}
                     onClick={(e) => e.stopPropagation()}
+                    onBlur={() => setEditingId(null)}
                     onKeyDown={(e) => {
                       if(e.key === 'Enter') {
                         updateData(dataKey, data[dataKey].map((i: any) => i.id === item.id ? { ...i, name: tempName } : i));
                         setEditingId(null);
-                        notify('ذخیره شد.');
+                        notify('تغییرات ذخیره شد.');
                       }
                       if(e.key === 'Escape') setEditingId(null);
                     }}
@@ -118,7 +119,7 @@ const ManagementView: React.FC<Props> = ({
                 ) : (
                   <>
                     <span className={`font-black text-xs ${isSelected ? 'text-indigo-900' : 'text-slate-600'}`}>{item.name}</span>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button 
                         onClick={(e) => { e.stopPropagation(); setEditingId(item.id); setTempName(item.name); }} 
                         className="p-2 text-slate-300 hover:text-indigo-600 transition-all"
@@ -164,7 +165,7 @@ const ManagementView: React.FC<Props> = ({
   return (
     <div className="space-y-12 pb-20">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <CRUDSection title="۱. سال تحصیلی" dataKey="academicYears" active={true} placeholder="مثلاً: ۱۴۰۳-۱۴۰۴" colorClass="bg-slate-900" items={years} onSelect={setSelectedYear} onAdd={(name: string) => updateData('academicYears', [...data.academicYears, { id: Date.now().toString(), name, teacherId: currentUser.id }])} onDelete={deleteYear} />
+        <CRUDSection title="۱. سال تحصیلی" dataKey="academicYears" active={true} placeholder="مثلاً: ۱۴۰۴-۱۴۰۵" colorClass="bg-slate-900" items={years} onSelect={setSelectedYear} onAdd={(name: string) => updateData('academicYears', [...data.academicYears, { id: Date.now().toString(), name, teacherId: currentUser.id }])} onDelete={deleteYear} />
         <CRUDSection title="۲. مدرسه" dataKey="schools" active={!!selectedYear} placeholder="نام مدرسه..." colorClass="bg-indigo-600" items={schools} onSelect={setSelectedSchool} onAdd={(name: string) => updateData('schools', [...data.schools, { id: Date.now().toString(), name, yearId: selectedYear }])} onDelete={deleteSchool} />
         <CRUDSection title="۳. کلاس" dataKey="classes" active={!!selectedSchool} placeholder="نام کلاس..." colorClass="bg-amber-500" items={classes} onSelect={setSelectedClass} onAdd={(name: string) => updateData('classes', [...data.classes, { id: Date.now().toString(), name, schoolId: selectedSchool }])} onDelete={deleteClass} />
       </div>

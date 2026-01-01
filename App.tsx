@@ -29,6 +29,33 @@ const App: React.FC = () => {
     saveData(data);
   }, [data]);
 
+  // Smart Auto-Selection Logic
+  useEffect(() => {
+    if (currentUser) {
+      if (!selectedYear && data.academicYears.length > 0) {
+        const teacherYears = data.academicYears.filter((y: any) => y.teacherId === currentUser.id);
+        if (teacherYears.length > 0) {
+          const latestYear = teacherYears[teacherYears.length - 1];
+          setSelectedYear(latestYear.id);
+        }
+      }
+      
+      if (selectedYear && !selectedSchool) {
+        const yearSchools = data.schools.filter((s: any) => s.yearId === selectedYear);
+        if (yearSchools.length > 0) {
+          setSelectedSchool(yearSchools[yearSchools.length - 1].id);
+        }
+      }
+
+      if (selectedSchool && !selectedClass) {
+        const schoolClasses = data.classes.filter((c: any) => c.schoolId === selectedSchool);
+        if (schoolClasses.length > 0) {
+          setSelectedClass(schoolClasses[schoolClasses.length - 1].id);
+        }
+      }
+    }
+  }, [currentUser, data.academicYears, data.schools, data.classes, selectedYear, selectedSchool]);
+
   const showNotify = useCallback((msg: string, type: 'info' | 'error' = 'info') => {
     setToast({ msg, type });
     setTimeout(() => setToast(null), 3000);
@@ -107,7 +134,6 @@ const App: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-[#f1f5f9] font-sans overflow-x-hidden text-slate-900">
-      {/* Sidebar Overlay */}
       <aside className="w-80 bg-white border-l border-slate-100 flex flex-col fixed inset-y-0 right-0 z-50 shadow-2xl">
         <div className="p-10 flex-grow">
           <div className="flex items-center gap-4 mb-16">
@@ -116,7 +142,7 @@ const App: React.FC = () => {
             </div>
             <div>
               <h1 className="font-black text-slate-900 text-2xl tracking-tighter leading-none">مدیریت دبیر</h1>
-              <p className="text-[10px] text-indigo-600 font-black uppercase tracking-widest mt-1 opacity-60">SMART TEACHER v2.5</p>
+              <p className="text-[10px] text-indigo-600 font-black uppercase tracking-widest mt-1 opacity-60">پنل هوشمند ارزیابی</p>
             </div>
           </div>
 
@@ -158,7 +184,6 @@ const App: React.FC = () => {
         </div>
       </aside>
 
-      {/* Main Content Area */}
       <main className="flex-grow mr-80 p-12 md:p-20 overflow-y-auto bg-slate-50/30">
         <div className="max-w-7xl mx-auto">
           <header className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -271,7 +296,6 @@ const App: React.FC = () => {
         </div>
       </main>
 
-      {/* Global Toast Notification */}
       {toast && (
         <div className={`fixed bottom-12 left-12 z-[100] px-10 py-6 rounded-[2.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] border flex items-center gap-5 animate-in slide-in-from-left-20 duration-500 backdrop-blur-3xl ${
           toast.type === 'error' ? 'bg-rose-600/90 text-white border-rose-500' : 'bg-slate-900/95 text-white border-slate-800'
