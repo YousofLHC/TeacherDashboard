@@ -59,13 +59,13 @@ const INITIAL_DATA = {
   ],
   gradeEntries: [],
   attendanceRecords: [],
-  disciplineRecords: []
+  disciplineRecords: [],
+  reminders: []
 };
 
 export const loadData = () => {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (!saved) {
-    // اگر داده‌ای وجود نداشت، داده‌های پیش‌فرض را برگردان و ذخیره کن
     localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_DATA));
     return INITIAL_DATA;
   }

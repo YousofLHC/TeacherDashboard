@@ -65,13 +65,15 @@ const SubjectSettingsView: React.FC<Props> = ({ subject, data, updateData, notif
           <h2 className="text-3xl font-black text-slate-900 tracking-tighter mb-2">ساختار نمره‌دهی درس</h2>
           <p className="text-slate-400 font-bold text-sm">تنظیم سهم و ضرایب ارزیابی برای <span className="text-indigo-600 font-black">{subject.name}</span></p>
         </div>
-        <button 
-          onClick={addRule}
-          className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 rounded-[1.8rem] font-black text-sm transition-all flex items-center gap-3 shadow-xl shadow-indigo-100 active:scale-95"
-        >
-          <ICONS.Plus className="w-5 h-5" />
-          افزودن سرفصل جدید
-        </button>
+        <div className="flex gap-4">
+           <button 
+             onClick={addRule}
+             className="bg-indigo-600 text-white hover:bg-indigo-700 px-8 py-4 rounded-[1.8rem] font-black text-sm transition-all flex items-center gap-3 shadow-xl shadow-indigo-100 active:scale-95"
+           >
+             <ICONS.Plus className="w-5 h-5" />
+             افزودن سرفصل جدید
+           </button>
+        </div>
       </div>
 
       <div className="space-y-4">

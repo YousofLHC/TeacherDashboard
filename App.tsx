@@ -122,6 +122,14 @@ const App: React.FC = () => {
     setData((prev: any) => ({ ...prev, [key]: newValue }));
   };
 
+  const handleBack = () => {
+    if (activeView === 'grading' || activeView === 'settings') {
+      setActiveView('dashboard');
+    } else if (activeView === 'management' || activeView === 'account') {
+      setActiveView('dashboard');
+    }
+  };
+
   if (!currentUser) {
     return <LoginView onLogin={handleAuth} error={authError} />;
   }
@@ -221,17 +229,28 @@ const App: React.FC = () => {
             <div className="space-y-6">
               <div className="flex items-center gap-6">
                  {/* Sidebar Toggle or Back Button */}
-                 <button 
-                   onClick={() => isSidebarOpen ? setIsSidebarOpen(false) : setIsSidebarOpen(true)}
-                   className="w-16 h-16 bg-white rounded-3xl text-slate-400 hover:text-indigo-600 hover:shadow-2xl transition-all flex items-center justify-center border border-slate-100 shadow-sm group"
-                   title={isSidebarOpen ? "بستن منو" : "باز کردن منو"}
-                 >
-                    {isSidebarOpen ? (
-                       <ICONS.ArrowRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
-                    ) : (
-                       <ICONS.Menu className="w-7 h-7" />
+                 <div className="flex gap-4">
+                    <button 
+                      onClick={() => isSidebarOpen ? setIsSidebarOpen(false) : setIsSidebarOpen(true)}
+                      className="w-16 h-16 bg-white rounded-3xl text-slate-400 hover:text-indigo-600 hover:shadow-2xl transition-all flex items-center justify-center border border-slate-100 shadow-sm group"
+                      title={isSidebarOpen ? "بستن منو" : "باز کردن منو"}
+                    >
+                       {isSidebarOpen ? (
+                          <ICONS.ArrowRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
+                       ) : (
+                          <ICONS.Menu className="w-7 h-7" />
+                       )}
+                    </button>
+                    {activeView !== 'dashboard' && (
+                      <button 
+                        onClick={handleBack}
+                        className="w-16 h-16 bg-indigo-600 rounded-3xl text-white hover:bg-slate-900 shadow-xl shadow-indigo-100 flex items-center justify-center transition-all animate-in zoom-in-75 duration-300"
+                        title="بازگشت به عقب"
+                      >
+                         <ICONS.ArrowRight className="w-7 h-7" />
+                      </button>
                     )}
-                 </button>
+                 </div>
                  <div>
                    <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-none mb-2">
                     {activeView === 'dashboard' && 'داشبورد شما'}
@@ -283,6 +302,7 @@ const App: React.FC = () => {
                 setSelectedSubject={setSelectedSubject}
                 onStartGrading={() => setActiveView('grading')}
                 onManageRules={() => setActiveView('settings')}
+                updateData={updateData}
               />
             )}
 

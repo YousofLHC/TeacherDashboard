@@ -73,3 +73,15 @@ export interface AttendanceRecord {
   status: AttendanceStatus;
   isIgnored?: boolean;
 }
+
+export interface Reminder {
+  id: string;
+  teacherId: string;
+  title: string;
+  description?: string;
+  date: string;
+  classId?: string;
+  subjectId?: string;
+  studentId?: string;
+  isCompleted: boolean;
+}
