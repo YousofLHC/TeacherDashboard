@@ -185,60 +185,60 @@ const GradingView: React.FC<Props> = ({ data, updateData, subject, classRoom, no
     }, [atts]);
 
     return (
-      <div className="fixed inset-0 z-[600] flex items-center justify-center p-4 md:p-8 backdrop-blur-3xl bg-slate-900/90 overflow-hidden">
-        <div className="bg-white w-full max-w-7xl rounded-[4rem] shadow-2xl h-full max-h-[94vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-500">
+      <div className="fixed inset-0 z-[600] flex items-center justify-center p-2 md:p-8 backdrop-blur-3xl bg-slate-900/90 overflow-hidden">
+        <div className="bg-white w-full max-w-7xl rounded-[2.5rem] md:rounded-[4rem] shadow-2xl h-full max-h-[96vh] md:max-h-[94vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-500">
           
-          <div className="p-10 md:p-14 border-b flex flex-col md:flex-row justify-between items-center gap-10 bg-gradient-to-br from-slate-50 to-white">
-            <div className="flex items-center gap-8">
-              <div className="w-28 h-28 rounded-[3rem] bg-indigo-600 flex items-center justify-center text-white font-black text-5xl shadow-2xl shadow-indigo-200 rotate-6">{student.name.charAt(0)}</div>
+          <div className="p-6 md:p-14 border-b flex flex-col md:flex-row justify-between items-center gap-6 md:gap-10 bg-gradient-to-br from-slate-50 to-white">
+            <div className="flex items-center gap-4 md:gap-8 w-full md:w-auto">
+              <div className="w-16 h-16 md:w-28 md:h-28 rounded-[1.5rem] md:rounded-[3rem] bg-indigo-600 flex items-center justify-center text-white font-black text-2xl md:text-5xl shadow-2xl shadow-indigo-200 rotate-6 shrink-0">{student.name.charAt(0)}</div>
               <div>
-                <h2 className="text-4xl font-black text-slate-900 tracking-tighter mb-2">{student.name}</h2>
-                <div className="flex gap-4">
-                   <span className="bg-indigo-50 text-indigo-600 px-5 py-1.5 rounded-full text-xs font-black">درس: {subject.name}</span>
-                   <span className="bg-slate-100 text-slate-500 px-5 py-1.5 rounded-full text-xs font-black">کلاس: {classRoom.name}</span>
+                <h2 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tighter mb-1 md:mb-2">{student.name}</h2>
+                <div className="flex flex-wrap gap-2 md:gap-4">
+                   <span className="bg-indigo-50 text-indigo-600 px-3 md:px-5 py-1 rounded-full text-[10px] md:text-xs font-black">درس: {subject.name}</span>
+                   <span className="bg-slate-100 text-slate-500 px-3 md:px-5 py-1 rounded-full text-[10px] md:text-xs font-black">کلاس: {classRoom.name}</span>
                 </div>
               </div>
             </div>
             
-            <div className="flex gap-16 items-center">
-              <div className="text-left">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">تراز نهایی کل</p>
-                <div className="flex items-baseline gap-2">
-                   <h3 className={`text-8xl font-black tracking-tighter ${Number(finalScore) >= 10 ? 'text-indigo-600' : 'text-rose-500'}`}>{finalScore}</h3>
-                   <span className="text-2xl font-black text-slate-200">/ ۲۰</span>
+            <div className="flex gap-8 md:gap-16 items-center w-full md:w-auto justify-around md:justify-end">
+              <div className="text-center md:text-left">
+                <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">تراز نهایی کل</p>
+                <div className="flex items-baseline gap-1 md:gap-2">
+                   <h3 className={`text-4xl md:text-8xl font-black tracking-tighter ${Number(finalScore) >= 10 ? 'text-indigo-600' : 'text-rose-500'}`}>{finalScore}</h3>
+                   <span className="text-sm md:text-2xl font-black text-slate-200">/ ۲۰</span>
                 </div>
               </div>
-              <div className="w-px h-24 bg-slate-100"></div>
-              <div className="text-left">
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">نرخ حضور</p>
+              <div className="hidden md:block w-px h-24 bg-slate-100"></div>
+              <div className="text-center md:text-left">
+                <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">نرخ حضور</p>
                 <div className="flex items-baseline gap-1">
-                   <h3 className="text-6xl font-black text-slate-800 tracking-tighter">{stats.rate}</h3>
-                   <span className="text-xl font-black text-slate-300">%</span>
+                   <h3 className="text-3xl md:text-6xl font-black text-slate-800 tracking-tighter">{stats.rate}</h3>
+                   <span className="text-xs md:text-xl font-black text-slate-300">%</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div ref={analysisScrollRef} className="flex-grow overflow-y-auto p-10 md:p-14 space-y-20 no-scrollbar bg-white" style={{ overflowAnchor: 'none' }}>
+          <div ref={analysisScrollRef} className="flex-grow overflow-y-auto p-4 md:p-14 space-y-10 md:space-y-20 no-scrollbar bg-white" style={{ overflowAnchor: 'none' }}>
             
-            <div className="space-y-8">
-               <div className="flex items-center gap-5">
-                  <div className="w-2.5 h-10 bg-indigo-600 rounded-full"></div>
+            <div className="space-y-4 md:space-y-8">
+               <div className="flex items-center gap-3 md:gap-5">
+                  <div className="w-1.5 md:w-2.5 h-6 md:h-10 bg-indigo-600 rounded-full"></div>
                   <div>
-                    <h3 className="text-2xl font-black text-slate-900 tracking-tight">تحلیل جامع سرفصل‌ها و اثر غیبت</h3>
+                    <h3 className="text-lg md:text-2xl font-black text-slate-900 tracking-tight">تحلیل جامع سرفصل‌ها و اثر غیبت</h3>
                   </div>
                </div>
 
-               <div className="bg-white border-2 border-slate-50 rounded-[3.5rem] overflow-hidden shadow-2xl shadow-slate-100">
-                  <table className="w-full text-right text-sm">
+               <div className="bg-white border-2 border-slate-50 rounded-[1.5rem] md:rounded-[3.5rem] overflow-x-auto no-scrollbar shadow-2xl shadow-slate-100">
+                  <table className="w-full text-right text-xs md:text-sm min-w-[750px]">
                     <thead className="bg-slate-900 text-white">
-                      <tr className="text-[10px] font-black uppercase tracking-widest">
-                        <th className="p-8">تاریخ و حضور</th>
-                        <th className="p-8">سرفصل ارزیابی</th>
-                        <th className="p-8 text-center">نمره</th>
-                        <th className="p-8 text-center">تراز ۲۰</th>
-                        <th className="p-8 text-center">ضریب</th>
-                        <th className="p-8 text-center">تأثیر در تراز کل</th>
+                      <tr className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">
+                        <th className="p-4 md:p-8 whitespace-nowrap">تاریخ و حضور</th>
+                        <th className="p-4 md:p-8 whitespace-nowrap">سرفصل ارزیابی</th>
+                        <th className="p-4 md:p-8 text-center whitespace-nowrap">نمره</th>
+                        <th className="p-4 md:p-8 text-center whitespace-nowrap">تراز ۲۰</th>
+                        <th className="p-4 md:p-8 text-center whitespace-nowrap">ضریب</th>
+                        <th className="p-4 md:p-8 text-center whitespace-nowrap">تأثیر در تراز</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
@@ -249,37 +249,37 @@ const GradingView: React.FC<Props> = ({ data, updateData, subject, classRoom, no
                         
                         return (
                           <tr key={e.id} className={`transition-all group hover:bg-slate-50/80 ${e.isIgnored ? 'opacity-30 grayscale' : ''}`}>
-                            <td className="p-8">
-                               <div className="flex items-center gap-5">
-                                  <div className={`w-4 h-4 rounded-full ${
+                            <td className="p-4 md:p-8">
+                               <div className="flex items-center gap-3 md:gap-5">
+                                  <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full shrink-0 ${
                                      att?.status === 'present' ? 'bg-emerald-500' :
                                      isAbsent ? 'bg-rose-500' :
                                      att?.status === 'late' ? 'bg-amber-500' : 'bg-slate-200'
                                   }`}></div>
                                   <div className="flex flex-col">
-                                     <span className="font-black text-slate-700 text-base">{toPersianDate(e.date)}</span>
-                                     <span className="text-[9px] font-black text-slate-300">{isAbsent ? 'غایب' : 'حاضر'}</span>
+                                     <span className="font-black text-slate-700 text-xs md:text-base whitespace-nowrap">{toPersianDate(e.date)}</span>
+                                     <span className="text-[8px] md:text-[9px] font-black text-slate-300">{isAbsent ? 'غایب' : 'حاضر'}</span>
                                   </div>
                                </div>
                             </td>
-                            <td className="p-8 font-black text-slate-800">{e.ruleNameAtTime}</td>
-                            <td className="p-8 text-center">
-                               <div className={`inline-flex items-center gap-3 px-6 py-2 rounded-2xl border-2 font-black ${isAbsent ? 'bg-rose-50 border-rose-100 text-rose-600' : 'bg-slate-50 border-slate-100'}`}>
+                            <td className="p-4 md:p-8 font-black text-slate-800">{e.ruleNameAtTime}</td>
+                            <td className="p-4 md:p-8 text-center">
+                               <div className={`inline-flex items-center gap-2 md:gap-3 px-3 md:px-6 py-1 md:py-2 rounded-xl md:rounded-2xl border-2 font-black ${isAbsent ? 'bg-rose-50 border-rose-100 text-rose-600' : 'bg-slate-50 border-slate-100'}`}>
                                   <span>{e.value}</span> / <span>{e.maxAtTime}</span>
                                </div>
                             </td>
-                            <td className="p-8 text-center">
-                               <span className={`text-3xl font-black tracking-tighter ${score20 >= 10 ? 'text-indigo-600' : 'text-rose-500'}`}>
+                            <td className="p-4 md:p-8 text-center">
+                               <span className={`text-xl md:text-3xl font-black tracking-tighter ${score20 >= 10 ? 'text-indigo-600' : 'text-rose-500'}`}>
                                  {score20.toFixed(2)}
                                </span>
                             </td>
-                            <td className="p-8 text-center font-black text-slate-300">{e.isIgnored ? '۰' : e.coefAtTime}</td>
-                            <td className="p-8 text-center">
+                            <td className="p-4 md:p-8 text-center font-black text-slate-300">{e.isIgnored ? '۰' : e.coefAtTime}</td>
+                            <td className="p-4 md:p-8 text-center">
                               <button 
                                 onClick={(ev) => toggleGradeIgnored(ev, e.id)}
-                                className={`relative inline-flex h-10 w-16 items-center rounded-full transition-all duration-300 ${e.isIgnored ? 'bg-slate-200' : 'bg-indigo-600 shadow-xl shadow-indigo-100'}`}
+                                className={`relative inline-flex h-8 w-12 md:h-10 md:w-16 items-center rounded-full transition-all duration-300 ${e.isIgnored ? 'bg-slate-200' : 'bg-indigo-600 shadow-xl shadow-indigo-100'}`}
                               >
-                                <span className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${e.isIgnored ? '-translate-x-1' : '-translate-x-9'}`} />
+                                <span className={`inline-block h-5 w-5 md:h-6 md:w-6 transform rounded-full bg-white transition-transform ${e.isIgnored ? '-translate-x-1' : 'md:-translate-x-9 -translate-x-6'}`} />
                               </button>
                             </td>
                           </tr>
@@ -290,21 +290,21 @@ const GradingView: React.FC<Props> = ({ data, updateData, subject, classRoom, no
                </div>
             </div>
 
-            <div className="flex flex-col gap-12">
-               <div className="bg-slate-50/50 p-12 rounded-[4rem] border border-slate-100 space-y-8 w-full">
-                  <h4 className="text-xl font-black text-slate-800 tracking-tight">توزیع وضعیت حضور و غیاب</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex flex-col gap-6 md:gap-12">
+               <div className="bg-slate-50/50 p-6 md:p-12 rounded-[2rem] md:rounded-[4rem] border border-slate-100 space-y-6 md:space-y-8 w-full">
+                  <h4 className="text-lg md:text-xl font-black text-slate-800 tracking-tight">توزیع وضعیت حضور و غیاب</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                      {[
                         { label: 'حاضر', count: stats.presence, color: 'bg-emerald-500', icon: ICONS.Plus },
                         { label: 'غایب', count: stats.absence, color: 'bg-rose-500', icon: ICONS.Trash },
                         { label: 'تأخیر', count: stats.late, color: 'bg-amber-500', icon: ICONS.Settings }
                      ].map((st, i) => (
-                        <div key={i} className="bg-white p-6 rounded-[2rem] border border-slate-100 flex items-center justify-between shadow-sm">
-                           <div className="flex items-center gap-4">
-                              <div className={`w-12 h-12 rounded-2xl ${st.color} flex items-center justify-center text-white shadow-lg`}><st.icon className="w-6 h-6" /></div>
-                              <span className="font-black text-slate-700">{st.label}</span>
+                        <div key={i} className="bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border border-slate-100 flex items-center justify-between shadow-sm">
+                           <div className="flex items-center gap-3 md:gap-4">
+                              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl ${st.color} flex items-center justify-center text-white shadow-lg`}><st.icon className="w-5 h-5 md:w-6 md:h-6" /></div>
+                              <span className="font-black text-slate-700 text-sm md:text-base">{st.label}</span>
                            </div>
-                           <span className="text-3xl font-black text-slate-900">{st.count}</span>
+                           <span className="text-2xl md:text-3xl font-black text-slate-900">{st.count}</span>
                         </div>
                      ))}
                   </div>
@@ -312,8 +312,8 @@ const GradingView: React.FC<Props> = ({ data, updateData, subject, classRoom, no
             </div>
           </div>
 
-          <div className="p-10 md:p-12 bg-slate-50 border-t flex justify-end">
-             <button onClick={() => setDetailStudentId(null)} className="bg-slate-900 text-white px-20 py-5 rounded-[2.5rem] font-black">بستن پنجره</button>
+          <div className="p-6 md:p-12 bg-slate-50 border-t flex justify-end">
+             <button onClick={() => setDetailStudentId(null)} className="w-full md:w-auto bg-slate-900 text-white px-20 py-4 md:py-5 rounded-[1.5rem] md:rounded-[2.5rem] font-black">بستن پنجره</button>
           </div>
         </div>
       </div>
