@@ -53,6 +53,12 @@ const LoginView: React.FC<Props> = ({ onLogin, error }) => {
               ? 'اطلاعات خود را برای ایجاد پنل مدیریت هوشمند وارد کنید.' 
               : 'نام کاربری و رمز عبور خود را برای ورود به پنل وارد نمایید.'}
           </p>
+          {!isRegister && (
+            <div className="mt-4 p-3 bg-indigo-50 rounded-2xl border border-indigo-100">
+               <p className="text-[10px] font-black text-indigo-600 uppercase">ورود سریع با داده‌های پیش‌فرض:</p>
+               <p className="text-xs font-bold text-slate-600">نام کاربری: <span className="text-indigo-700">admin</span> | رمز: <span className="text-indigo-700">admin123</span></p>
+            </div>
+          )}
         </div>
 
         {displayError && (

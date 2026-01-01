@@ -119,7 +119,6 @@ const App: React.FC = () => {
     <button 
       onClick={() => {
         setActiveView(view);
-        showNotify(`نمایش ${label}`);
       }}
       className={`flex items-center gap-4 w-full px-5 py-4 rounded-[1.8rem] transition-all duration-500 group ${
         activeView === view 
@@ -167,11 +166,11 @@ const App: React.FC = () => {
                 onClick={() => setActiveView('account')}
               >
                  <div className="w-14 h-14 rounded-[1.5rem] bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg transition-transform group-hover:scale-110">
-                    {currentUser.username.charAt(0).toUpperCase()}
+                    {currentUser?.username?.charAt(0).toUpperCase() || '?'}
                  </div>
                  <div className="overflow-hidden">
                     <p className="text-[10px] font-black text-slate-400 leading-none mb-1">تنظیمات پروفایل</p>
-                    <p className="font-black text-slate-800 text-base truncate tracking-tight">{currentUser.fullName || currentUser.username}</p>
+                    <p className="font-black text-slate-800 text-base truncate tracking-tight">{currentUser?.fullName || currentUser?.username || 'کاربر'}</p>
                  </div>
               </div>
               <button 

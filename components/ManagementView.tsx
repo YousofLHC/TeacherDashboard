@@ -67,9 +67,13 @@ const ManagementView: React.FC<Props> = ({
 
     const handleAdd = () => {
       if (inputValue.trim()) {
-        onAdd(inputValue.trim());
+        const newId = Date.now().toString();
+        onAdd(inputValue.trim(), newId);
         setInputValue(dataKey === 'academicYears' ? '۱۴۰۴-۱۴۰۵' : '');
-        notify('با موفقیت اضافه شد.');
+        // خودکار انتخاب کردن گزینه جدید بدون نمایش پیغام
+        if (onSelect) {
+          onSelect(newId);
+        }
       }
     };
 
@@ -165,14 +169,62 @@ const ManagementView: React.FC<Props> = ({
   return (
     <div className="space-y-12 pb-20">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <CRUDSection title="۱. سال تحصیلی" dataKey="academicYears" active={true} placeholder="مثلاً: ۱۴۰۴-۱۴۰۵" colorClass="bg-slate-900" items={years} onSelect={setSelectedYear} onAdd={(name: string) => updateData('academicYears', [...data.academicYears, { id: Date.now().toString(), name, teacherId: currentUser.id }])} onDelete={deleteYear} />
-        <CRUDSection title="۲. مدرسه" dataKey="schools" active={!!selectedYear} placeholder="نام مدرسه..." colorClass="bg-indigo-600" items={schools} onSelect={setSelectedSchool} onAdd={(name: string) => updateData('schools', [...data.schools, { id: Date.now().toString(), name, yearId: selectedYear }])} onDelete={deleteSchool} />
-        <CRUDSection title="۳. کلاس" dataKey="classes" active={!!selectedSchool} placeholder="نام کلاس..." colorClass="bg-amber-500" items={classes} onSelect={setSelectedClass} onAdd={(name: string) => updateData('classes', [...data.classes, { id: Date.now().toString(), name, schoolId: selectedSchool }])} onDelete={deleteClass} />
+        <CRUDSection 
+          title="۱. سال تحصیلی" 
+          dataKey="academicYears" 
+          active={true} 
+          placeholder="مثلاً: ۱۴۰۴-۱۴۰۵" 
+          colorClass="bg-slate-900" 
+          items={years} 
+          onSelect={setSelectedYear} 
+          onAdd={(name: string, id: string) => updateData('academicYears', [...data.academicYears, { id, name, teacherId: currentUser.id }])} 
+          onDelete={deleteYear} 
+        />
+        <CRUDSection 
+          title="۲. مدرسه" 
+          dataKey="schools" 
+          active={!!selectedYear} 
+          placeholder="نام مدرسه..." 
+          colorClass="bg-indigo-600" 
+          items={schools} 
+          onSelect={setSelectedSchool} 
+          onAdd={(name: string, id: string) => updateData('schools', [...data.schools, { id, name, yearId: selectedYear }])} 
+          onDelete={deleteSchool} 
+        />
+        <CRUDSection 
+          title="۳. کلاس" 
+          dataKey="classes" 
+          active={!!selectedSchool} 
+          placeholder="نام کلاس..." 
+          colorClass="bg-amber-500" 
+          items={classes} 
+          onSelect={setSelectedClass} 
+          onAdd={(name: string, id: string) => updateData('classes', [...data.classes, { id, name, schoolId: selectedSchool }])} 
+          onDelete={deleteClass} 
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <CRUDSection title="۴. دانش‌آموزان" dataKey="students" active={!!selectedClass} placeholder="نام کامل..." colorClass="bg-rose-600" items={students} onAdd={(name: string) => updateData('students', [...data.students, { id: Date.now().toString(), name, classId: selectedClass }])} onDelete={deleteStudent} />
-        <CRUDSection title="۵. دروس" dataKey="subjects" active={!!selectedClass} placeholder="نام درس..." colorClass="bg-emerald-600" items={subjects} onAdd={(name: string) => updateData('subjects', [...data.subjects, { id: Date.now().toString(), name, classId: selectedClass, rules: [...DEFAULT_RULES] }])} onDelete={deleteSubject} />
+        <CRUDSection 
+          title="۴. دانش‌آموزان" 
+          dataKey="students" 
+          active={!!selectedClass} 
+          placeholder="نام کامل..." 
+          colorClass="bg-rose-600" 
+          items={students} 
+          onAdd={(name: string, id: string) => updateData('students', [...data.students, { id, name, classId: selectedClass }])} 
+          onDelete={deleteStudent} 
+        />
+        <CRUDSection 
+          title="۵. دروس" 
+          dataKey="subjects" 
+          active={!!selectedClass} 
+          placeholder="نام درس..." 
+          colorClass="bg-emerald-600" 
+          items={subjects} 
+          onAdd={(name: string, id: string) => updateData('subjects', [...data.subjects, { id, name, classId: selectedClass, rules: [...DEFAULT_RULES] }])} 
+          onDelete={deleteSubject} 
+        />
       </div>
     </div>
   );

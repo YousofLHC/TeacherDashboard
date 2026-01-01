@@ -62,6 +62,7 @@ export interface GradeEntry {
   percentAtTime: number;
   ruleNameAtTime?: string;
   note?: string;
+  isIgnored?: boolean;
 }
 
 export interface AttendanceRecord {
@@ -70,4 +71,5 @@ export interface AttendanceRecord {
   subjectId: string;
   date: string;
   status: AttendanceStatus;
+  isIgnored?: boolean;
 }
