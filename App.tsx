@@ -18,6 +18,9 @@ const App: React.FC = () => {
   const [toast, setToast] = useState<{ msg: string; type: 'info' | 'error' } | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   
+  // Sidebar State
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 1024);
+
   // Navigation State
   const [activeView, setActiveView] = useState<'dashboard' | 'management' | 'grading' | 'settings' | 'account'>('dashboard');
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
@@ -28,6 +31,19 @@ const App: React.FC = () => {
   useEffect(() => {
     saveData(data);
   }, [data]);
+
+  // Handle Resize for Sidebar
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1024) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Smart Auto-Selection Logic
   useEffect(() => {
@@ -119,6 +135,7 @@ const App: React.FC = () => {
     <button 
       onClick={() => {
         setActiveView(view);
+        if (window.innerWidth <= 1024) setIsSidebarOpen(false);
       }}
       className={`flex items-center gap-4 w-full px-5 py-4 rounded-[1.8rem] transition-all duration-500 group ${
         activeView === view 
@@ -133,10 +150,22 @@ const App: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-[#f1f5f9] font-sans overflow-x-hidden text-slate-900">
-      <aside className="w-80 bg-white border-l border-slate-100 flex flex-col fixed inset-y-0 right-0 z-50 shadow-2xl">
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[45] lg:hidden transition-opacity duration-500"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      <aside className={`fixed inset-y-0 right-0 z-50 bg-white border-l border-slate-100 flex flex-col shadow-2xl transition-all duration-500 ease-in-out ${isSidebarOpen ? 'w-80 translate-x-0' : 'w-80 translate-x-full'}`}>
         <div className="p-10 flex-grow">
-          <div className="flex items-center gap-4 mb-16">
-            <div className="w-14 h-14 bg-indigo-600 rounded-[1.8rem] flex items-center justify-center shadow-2xl shadow-indigo-100">
+          {/* Logo Section - Toggle Trigger */}
+          <div 
+            className="flex items-center gap-4 mb-16 cursor-pointer group hover:opacity-80 transition-all"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          >
+            <div className="w-14 h-14 bg-indigo-600 rounded-[1.8rem] flex items-center justify-center shadow-2xl shadow-indigo-100 transition-transform group-hover:scale-110">
                <ICONS.Layout className="w-8 h-8 text-white" />
             </div>
             <div>
@@ -163,7 +192,10 @@ const App: React.FC = () => {
            <div className="bg-slate-50 border border-slate-100 rounded-[2.8rem] p-6 shadow-sm">
               <div 
                 className="flex items-center gap-4 mb-6 cursor-pointer group"
-                onClick={() => setActiveView('account')}
+                onClick={() => {
+                  setActiveView('account');
+                  if (window.innerWidth <= 1024) setIsSidebarOpen(false);
+                }}
               >
                  <div className="w-14 h-14 rounded-[1.5rem] bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg transition-transform group-hover:scale-110">
                     {currentUser?.username?.charAt(0).toUpperCase() || '?'}
@@ -183,17 +215,22 @@ const App: React.FC = () => {
         </div>
       </aside>
 
-      <main className="flex-grow mr-80 p-12 md:p-20 overflow-y-auto bg-slate-50/30">
+      <main className={`flex-grow transition-all duration-500 ease-in-out p-6 md:p-12 lg:p-20 overflow-y-auto bg-slate-50/30 ${isSidebarOpen ? 'lg:mr-80' : 'mr-0'}`}>
         <div className="max-w-7xl mx-auto">
           <header className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
             <div className="space-y-6">
               <div className="flex items-center gap-6">
+                 {/* Sidebar Toggle or Back Button */}
                  <button 
-                   onClick={() => setActiveView('dashboard')}
+                   onClick={() => isSidebarOpen ? setIsSidebarOpen(false) : setIsSidebarOpen(true)}
                    className="w-16 h-16 bg-white rounded-3xl text-slate-400 hover:text-indigo-600 hover:shadow-2xl transition-all flex items-center justify-center border border-slate-100 shadow-sm group"
-                   title="بازگشت به داشبورد"
+                   title={isSidebarOpen ? "بستن منو" : "باز کردن منو"}
                  >
-                    <ICONS.ArrowRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
+                    {isSidebarOpen ? (
+                       <ICONS.ArrowRight className="w-7 h-7 transition-transform group-hover:translate-x-1" />
+                    ) : (
+                       <ICONS.Menu className="w-7 h-7" />
+                    )}
                  </button>
                  <div>
                    <h2 className="text-5xl font-black text-slate-900 tracking-tighter leading-none mb-2">
